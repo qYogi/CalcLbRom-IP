@@ -12,6 +12,8 @@ struct Token {
     long double value; // vvaloate doar pt numere
     char type; // 0 pt numere, "operatori (+/- etc)" pt adunare, scadere etc
 };
+char rezultatFinal[400] = "";
+int operand = 0, previous = 0;
 
 
 Token Item; // Obiect de tip Token -- de ex  a = b + 2;, Tokenurile sunt a, =, b, + și 2
