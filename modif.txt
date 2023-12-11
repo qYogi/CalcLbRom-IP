@@ -1,0 +1,52 @@
+///de aici incepe functia, am adaugat si main unde se apeleaza functia (sper ca e ok)
+
+void afisareNumar(int numar) {
+    if (numar >= 0 && numar <= 100000000) {
+        string numarStr = to_string(numar);
+        int lungime = numarStr.length();
+        char rezultatFinal[400] = "";
+
+        switch (lungime) {
+            case 1:
+                afisareCifra(numarStr, 0, lungime - 1);
+                break;
+            case 2:
+                afisareZecilor(numarStr, 0, lungime - 1);
+                break;
+            case 3:
+                afisareSutelor(numarStr, 0, lungime - 1);
+                break;
+            case 4:
+            case 5:
+            case 6:
+                afisareMiilor(numarStr, 0, lungime - 1);
+                break;
+            case 7:
+            case 8:
+            case 9:
+                afisareMilioane(numarStr, 0, lungime - 1);
+                break;
+            default:
+                cout << "lalala" << endl;
+                break;
+        }
+
+        cout << "Numarul in cuvinte: " << rezultatFinal << endl;
+    } else {
+        cout << "lalala" << endl;
+    }
+}
+
+
+int main() {
+    int numar;
+    cin >> numar;
+    afisareNumar(numar);
+    //string input1 = "21";
+    //string input2 = "1123456";
+
+    //afisareMilioane(input2, 0, input2.length() - 1);
+    cout << rezultatFinal <<endl;
+
+    return 0;
+}
