@@ -1,0 +1,134 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void zeciSiUnitati(char *cuvant, int &operand, int &previous)
+{
+    int valoare = 0;
+
+    if (strcmp(cuvant, "zero") == 0)
+        valoare = 0;
+    else if (strcmp(cuvant, "unu") == 0)
+        valoare = 1;
+    else if (strcmp(cuvant, "doi") == 0 || strcmp(cuvant, "doua") == 0)
+        valoare = 2;
+    else if (strcmp(cuvant, "trei") == 0)
+        valoare = 3;
+    else if (strcmp(cuvant, "patru") == 0)
+        valoare = 4;
+    else if (strcmp(cuvant, "cinci") == 0)
+        valoare = 5;
+    else if (strcmp(cuvant, "sase") == 0)
+        valoare = 6;
+    else if (strcmp(cuvant, "sapte") == 0)
+        valoare = 7;
+    else if (strcmp(cuvant, "opt") == 0)
+        valoare = 8;
+    else if (strcmp(cuvant, "noua") == 0)
+        valoare = 9;
+    else if (strcmp(cuvant, "zece") == 0)
+        valoare = 10;
+    else if (strcmp(cuvant, "unsprezece") == 0)
+        valoare = 11;
+    else if (strcmp(cuvant, "doisprezece") == 0)
+        valoare = 12;
+    else if (strcmp(cuvant, "treisprezece") == 0)
+        valoare = 13;
+    else if (strcmp(cuvant, "paisprezece") == 0)
+        valoare = 14;
+    else if (strcmp(cuvant, "cincisprezece") == 0)
+        valoare = 15;
+    else if (strcmp(cuvant, "saisprezece") == 0)
+        valoare = 16;
+    else if (strcmp(cuvant, "saptesprezece") == 0)
+        valoare = 17;
+    else if (strcmp(cuvant, "optsprezece") == 0)
+        valoare = 18;
+    else if (strcmp(cuvant, "nouasprezece") == 0)
+        valoare = 19;
+    else if (strcmp(cuvant, "douazeci") == 0)
+        valoare = 20;
+    else if (strcmp(cuvant, "treizeci") == 0)
+        valoare = 30;
+    else if (strcmp(cuvant, "patruzeci") == 0)
+        valoare = 40;
+    else if (strcmp(cuvant, "cincizeci") == 0)
+        valoare = 50;
+    else if (strcmp(cuvant, "saizeci") == 0)
+        valoare = 60;
+    else if (strcmp(cuvant, "saptezeci") == 0)
+        valoare = 70;
+    else if (strcmp(cuvant, "optzeci") == 0)
+        valoare = 80;
+    else if (strcmp(cuvant, "nouazeci") == 0)
+        valoare = 90;
+    else if (strcmp(cuvant, "suta") == 0)
+        valoare = 100;
+    else if (strcmp(cuvant, "mie") == 0)
+        valoare = 1000;
+    else if (strcmp(cuvant, "milion") == 0)
+        valoare = 1000000;
+
+    operand += valoare * previous;
+}
+
+
+void sute(char *cuvant, int &operand, int &previous) 
+{
+    int valoare = 0;
+
+    if (strcmp(cuvant, "suta") == 0)
+        valoare = 100;
+    if (operand > 999)
+        operand = operand % 100 * 100 + operand / 1000 * 1000;
+    else operand *= 100;
+
+    operand += valoare * previous;
+}
+
+void mii(char *cuvant, int &operand, int &previous)
+{
+    int valoare = 0;
+
+    if (strcmp(cuvant, "mie") == 0)
+        valoare = 1000;
+    if (operand > 999999)
+        operand = operand % 1000 * 1000 + operand / 10000 * 10000;
+    else
+        operand *= 1000;
+
+    operand += valoare * previous;
+}
+
+void milioane(char *p, int &operand, int &previous)
+{
+    operand = 0;
+
+    char *cuvant = strtok(p, " ");
+
+    while (cuvant != NULL)
+    {
+        previous = 1;
+
+        if (strcmp(cuvant, "milioane") == 0)
+            operand *= 1000000;
+        else if (strcmp(cuvant, "mii") == 0)
+            mii(cuvant, operand, previous);
+        else if (strcmp(cuvant, "sute") == 0)
+            sute(cuvant, operand, previous);
+        else
+            zeciSiUnitati(cuvant, operand, previous);
+        
+        cuvant = strtok(NULL, " ");
+    }
+}
+
+int main()
+{
+    char input[]="patru sute optzeci si sase de mii saptezeci si trei";
+    int rezultat = 0;
+    int valoarePrecedenta = 1;
+
+    milioane(input, rezultat, valoarePrecedenta);
+    cout << rezultat;
+    return 0;
+}
