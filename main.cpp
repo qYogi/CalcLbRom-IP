@@ -15,8 +15,8 @@ struct Token {
 char rezultatFinal[400] = "", input[100] = "", separator[]=" ", sirprelucrat[300] = "", propozitie[300], *p, semn;
 int i=0,j=0, numbers[100], countNumere = 0, countOperatii = 0, counter = 0, aparitii_zero = 0;
 bool isNumber=false, isParenthesis=false, isParanthesisPtSemne=false, DupaVirgula=true, isZero, isRatio=true;
-Token Item; // Obiect de tip Token -- de ex  a = b + 2;, Tokenurile sunt a, =, b, + și 2
-int operand = 0, previous = 0, intermediar = 0;
+Token item; // Obiect de tip Token -- de ex  a = b + 2;, Tokenurile sunt a, =, b, + și 2
+int operand = 0, previous = 0, distanta = 0;
 string numar;
 
 
@@ -531,17 +531,145 @@ void afisareMilioane(const string& a, int Start, int Final){
             break;
     }
     }
+void afisareNumar(string a, int lungime)
+{
+    switch (lungime)
+    {
+    case 1:
+        afisareCifra(a, 0, lungime - 1);
+        break;
+    case 2:
+        afisareZecilor(a, 0, lungime - 1);
+        break;
+    case 3:
+        afisareSutelor(a, 0, lungime - 1);
+        break;
+    case 4:
+        afisareMiilor(a, 0, lungime - 1);
+        break;
+    case 5:
+        afisareMiilor(a, 0, lungime - 1);
+        break;
+    case 6:
+        afisareMiilor(a, 0, lungime - 1);
+        break;
+    case 7:
+        afisareMilioane(a, 0, lungime - 1);
+        break;
+    case 8:
+        afisareMilioane(a, 0, lungime - 1);
+        break;
+    case 9:
+        afisareMilioane(a, 0, lungime - 1);
+        break;
+    }
 
-/////////
-////////
-///////
-///////
-//////
-////
-///
-///
+}
 
-void milioane(char *p, int &operand, int &previous) {
+
+//////////////////////////////////////////////
+/////////////////////////////////////////////
+////////////////////////////////////////////////////
+void zeciSiUnitati(char *cuvant, int &operand, int &previous)
+{
+    int valoare = 0;
+
+    if (strcmp(cuvant, "zero") == 0)
+        valoare = 0;
+    else if (strcmp(cuvant, "unu") == 0)
+        valoare = 1;
+    else if (strcmp(cuvant, "doi") == 0 || strcmp(cuvant, "doua") == 0)
+        valoare = 2;
+    else if (strcmp(cuvant, "trei") == 0)
+        valoare = 3;
+    else if (strcmp(cuvant, "patru") == 0)
+        valoare = 4;
+    else if (strcmp(cuvant, "cinci") == 0)
+        valoare = 5;
+    else if (strcmp(cuvant, "sase") == 0)
+        valoare = 6;
+    else if (strcmp(cuvant, "sapte") == 0)
+        valoare = 7;
+    else if (strcmp(cuvant, "opt") == 0)
+        valoare = 8;
+    else if (strcmp(cuvant, "noua") == 0)
+        valoare = 9;
+    else if (strcmp(cuvant, "zece") == 0)
+        valoare = 10;
+    else if (strcmp(cuvant, "unsprezece") == 0)
+        valoare = 11;
+    else if (strcmp(cuvant, "doisprezece") == 0)
+        valoare = 12;
+    else if (strcmp(cuvant, "treisprezece") == 0)
+        valoare = 13;
+    else if (strcmp(cuvant, "paisprezece") == 0)
+        valoare = 14;
+    else if (strcmp(cuvant, "cincisprezece") == 0)
+        valoare = 15;
+    else if (strcmp(cuvant, "saisprezece") == 0)
+        valoare = 16;
+    else if (strcmp(cuvant, "saptesprezece") == 0)
+        valoare = 17;
+    else if (strcmp(cuvant, "optsprezece") == 0)
+        valoare = 18;
+    else if (strcmp(cuvant, "nouasprezece") == 0)
+        valoare = 19;
+    else if (strcmp(cuvant, "douazeci") == 0)
+        valoare = 20;
+    else if (strcmp(cuvant, "treizeci") == 0)
+        valoare = 30;
+    else if (strcmp(cuvant, "patruzeci") == 0)
+        valoare = 40;
+    else if (strcmp(cuvant, "cincizeci") == 0)
+        valoare = 50;
+    else if (strcmp(cuvant, "saizeci") == 0)
+        valoare = 60;
+    else if (strcmp(cuvant, "saptezeci") == 0)
+        valoare = 70;
+    else if (strcmp(cuvant, "optzeci") == 0)
+        valoare = 80;
+    else if (strcmp(cuvant, "nouazeci") == 0)
+        valoare = 90;
+    else if (strcmp(cuvant, "suta") == 0)
+        valoare = 100;
+    else if (strcmp(cuvant, "mie") == 0)
+        valoare = 1000;
+    else if (strcmp(cuvant, "milion") == 0)
+        valoare = 1000000;
+
+    operand += valoare * previous;
+}
+
+
+void sute(char *cuvant, int &operand, int &previous)
+{
+    int valoare = 0;
+
+    if (strcmp(cuvant, "suta") == 0)
+        valoare = 100;
+    if (operand > 999)
+        operand = operand % 100 * 100 + operand / 1000 * 1000;
+    else operand *= 100;
+
+    operand += valoare * previous;
+}
+
+void mii(char *cuvant, int &operand, int &previous)
+{
+    int valoare = 0;
+
+    if (strcmp(cuvant, "mie") == 0)
+        valoare = 1000;
+    if (operand > 999999)
+        operand = operand % 1000 * 1000 + operand / 10000 * 10000;
+    else
+        operand *= 1000;
+
+    operand += valoare * previous;
+}
+
+void milioane(char *p, int &operand, int &previous)
+{
     operand = 0;
 
     char *cuvant = strtok(p, " ");
@@ -549,96 +677,15 @@ void milioane(char *p, int &operand, int &previous) {
     while (cuvant != NULL)
     {
         previous = 1;
+
         if (strcmp(cuvant, "milioane") == 0)
-        {
-
             operand *= 1000000;
-            //previous = 1000000;
-        }
         else if (strcmp(cuvant, "mii") == 0)
-        {
-            if (operand > 999999)
-                operand = operand % 1000 * 1000 + operand / 10000 * 10000;
-            else
-                operand *= 1000;
-        }
+            mii(cuvant, operand, previous);
         else if (strcmp(cuvant, "sute") == 0)
-        {
-            //previous = 100;
-            if (operand > 999)
-                operand = operand % 100 * 100 + operand / 1000 * 1000;
-            else operand *= 100;
-        }
+            sute(cuvant, operand, previous);
         else
-        {
-            int valoare = 0;
-            if (strcmp(cuvant, "zero") == 0)
-                valoare = 0;
-            else if (strcmp(cuvant, "unu") == 0)
-                valoare = 1;
-            else if (strcmp(cuvant, "doi") == 0 || strcmp(cuvant, "doua") == 0)
-                valoare = 2;
-            else if (strcmp(cuvant, "trei") == 0)
-                valoare = 3;
-            else if (strcmp(cuvant, "patru") == 0)
-                valoare = 4;
-            else if (strcmp(cuvant, "cinci") == 0)
-                valoare = 5;
-            else if (strcmp(cuvant, "sase") == 0)
-                valoare = 6;
-            else if (strcmp(cuvant, "sapte") == 0)
-                valoare = 7;
-            else if (strcmp(cuvant, "opt") == 0)
-                valoare = 8;
-            else if (strcmp(cuvant, "noua") == 0)
-                valoare = 9;
-            else if (strcmp(cuvant, "zece") == 0)
-                valoare = 10;
-            else if (strcmp(cuvant, "unsprezece") == 0)
-                valoare = 11;
-            else if (strcmp(cuvant, "doisprezece") == 0)
-                valoare = 12;
-            else if (strcmp(cuvant, "treisprezece") == 0)
-                valoare = 13;
-            else if (strcmp(cuvant, "paisprezece") == 0)
-                valoare = 14;
-            else if (strcmp(cuvant, "cincisprezece") == 0)
-                valoare = 15;
-            else if (strcmp(cuvant, "saisprezece") == 0)
-                valoare = 16;
-            else if (strcmp(cuvant, "saptesprezece") == 0)
-                valoare = 17;
-            else if (strcmp(cuvant, "optsprezece") == 0)
-                valoare = 18;
-            else if (strcmp(cuvant, "nouasprezece") == 0)
-                valoare = 19;
-            else if (strcmp(cuvant, "douazeci") == 0)
-                valoare = 20;
-            else if (strcmp(cuvant, "treizeci") == 0)
-                valoare = 30;
-            else if (strcmp(cuvant, "patruzeci") == 0)
-                valoare = 40;
-            else if (strcmp(cuvant, "cincizeci") == 0)
-                valoare = 50;
-            else if (strcmp(cuvant, "saizeci") == 0)
-                valoare = 60;
-            else if (strcmp(cuvant, "saptezeci") == 0)
-                valoare = 70;
-            else if (strcmp(cuvant, "optzeci") == 0)
-                valoare = 80;
-            else if (strcmp(cuvant, "nouazeci") == 0)
-                valoare = 90;
-            else if (strcmp(cuvant, "suta") == 0)
-                valoare = 100;
-            else if (strcmp(cuvant, "mie") == 0)
-                valoare = 1000;
-            else if (strcmp(cuvant, "milion") == 0)
-                valoare = 1000000;
-            else
-                cout << "Cuvant necunoscut: " << cuvant << endl;
-
-            operand += valoare * previous;
-        }
+            zeciSiUnitati(cuvant, operand, previous);
 
         cuvant = strtok(NULL, " ");
     }
@@ -717,7 +764,7 @@ void PrelucrareaPropozitiei (int variabila){
             if (strstr (p,"zero"))
                 isZero=true;
             isNumber=true;
-            milioane(p,operand,previous,intermediar);
+            milioane(p,operand,previous);
         }
         else
         {
@@ -733,7 +780,7 @@ void PrelucrareaPropozitiei (int variabila){
             if (strstr(p,",")) if (isNumber) {input[i]='n';i++;}
             if (strstr(p,")"))
             {
-                isParanthesis=true;
+                isParenthesis=true;
                 isParanthesisPtSemne=true;
                 distanta=1;
                 if (isNumber)
@@ -807,16 +854,15 @@ void PrelucrareaPropozitiei (int variabila){
             IesireDinIf:
             if (strstr(p,"cu"))
             {
-                if(isParanthesis) goto OmitemParanteza;
+                if(isParenthesis) goto OmitemParanteza;
                 if (isNumber) {input[i]='n';i++;}
             }
             OmitemParanteza:
-            isParanthesis=false;
+            isParenthesis=false;
             isNumber=false;
             if (previous!=0)
                 operand=operand+previous;
-            if (intermediar!=0)
-                operand=operand+intermediar;
+
             if (operand!=0 || isZero)
             {
                 isZero=false;
@@ -824,7 +870,7 @@ void PrelucrareaPropozitiei (int variabila){
                 counter++;
                 operand=0;
                 previous=0;
-                intermediar=0;
+
             }
 
         }
@@ -833,8 +879,7 @@ void PrelucrareaPropozitiei (int variabila){
 
             if (previous!=0)
                 operand=operand+previous;
-            if (intermediar!=0)
-                operand=operand+intermediar;
+
             if (operand!=0||isZero)
             {
                 isZero=false;
@@ -842,7 +887,7 @@ void PrelucrareaPropozitiei (int variabila){
                 counter++;
                 operand=0;
                 previous=0;
-                intermediar=0;
+
             }
 
 }
@@ -1129,15 +1174,15 @@ double CalculareaRezultatului (double variabila)
                 //cin.ignore();
                 continue;
             }
-            if (stackOperatii.size() != 0 && getRang(Ch) > getRang(stackOperatii.top().type)) { //daca stiva nu este vida, insa prioritatea operatiei curente este mai mare decat cea din varful stivei
+            if (stackOperatii.size() != 0 && getPriority(Ch) > getPriority(stackOperatii.top().type)) { //daca stiva nu este vida, insa prioritatea operatiei curente este mai mare decat cea din varful stivei
                 item.type = Ch;
                 item.value = 0;
                 stackOperatii.push(item); //operatia se insereaza in stiva cu operatii
                 //cin.ignore();
                 continue;
             }
-            if (stackOperatii.size() != 0 && getRang(Ch) <= getRang(stackOperatii.top().type)) {//daca stiva nu este vida, insa prioritatea operatiei curente e mai mica sau egala cu cea din varful stivei
-                if (Maths(stackNumere, stackOperatii, item) == false) { //daca funtia returneaza 'false' incetam lucrul
+            if (stackOperatii.size() != 0 && getPriority(Ch) <= getPriority(stackOperatii.top().type)) {//daca stiva nu este vida, insa prioritatea operatiei curente e mai mica sau egala cu cea din varful stivei
+                if (mathOperation(stackNumere, stackOperatii, item) == false) { //daca funtia returneaza 'false' incetam lucrul
                     system("pause");
                     return 0;
                 }
@@ -1157,7 +1202,7 @@ double CalculareaRezultatului (double variabila)
         }
         if (Ch == ')') { //daca am citit paranteza inchisa
             while (stackOperatii.top().type != '(') {
-                if (Maths(stackNumere, stackOperatii, item) == false) { //daca functia returneaza 'false' incetam calculul
+                if (mathOperation(stackNumere, stackOperatii, item) == false) { //daca functia returneaza 'false' incetam calculul
                     system("pause");
                     return 0;
                 }
@@ -1174,13 +1219,13 @@ double CalculareaRezultatului (double variabila)
         }
     }
     while (stackOperatii.size() != 0) { //apelam functia matematica pana cand in stiva cu operatii nu raman 0 elemente
-    if (Maths(stackNumere, stackOperatii, item) == false) { //daca functia returneaza 'false' incetam calculul
+    if (mathOperation(stackNumere, stackOperatii, item) == false) { //daca functia returneaza 'false' incetam calculul
         system("pause");
         return 0;
     }
     else continue; //daca totul e bine
     }
-    //cout << "Raspunsul: " << stackNumere.top().value << endl; //afisam rezultatul
+    //cout << "Raspunsul: " << Stack_n.top().value << endl; //afisam rezultatul
 
     numar = to_string(stackNumere.top().value);
     //cout<<numar<<endl;
@@ -1283,8 +1328,8 @@ int main(){
 
     TransformareNumarInCuvinte (1);
 
-    if (raport)
-        cout<<"Raspunsul:"<<RezultatFinal<<endl;
+    if (isRatio)
+        cout<<"Raspunsul:"<<rezultatFinal<<endl;
 
 
 
