@@ -570,126 +570,236 @@ void afisareNumar(string a, int lungime)
 //////////////////////////////////////////////
 /////////////////////////////////////////////
 ////////////////////////////////////////////////////
-void zeciSiUnitati(char *cuvant, int &operand, int &previous)
+void cifre(char *p, int &operand, int &precedent)
 {
-    int valoare = 0;
+    char cuvant[100];
+    strcpy(cuvant,"zero");
+    if (strcmp(p,cuvant)==0)
+        precedent=precedent+0;
+    strcpy(cuvant,"unu");
+    if (strcmp(p,cuvant)==0)
+        precedent=precedent+1;
+    strcpy(cuvant,"doi");
+    if (strcmp(p,cuvant)==0)
+        precedent=precedent+2;
+    strcpy(cuvant,"doua");
+    if (strcmp(p,cuvant)==0)
+        precedent=precedent+2;
+    strcpy(cuvant,"trei");
+    if (strcmp(p,cuvant)==0)
+        precedent=precedent+3;
+    strcpy(cuvant,"patru");
+    if (strcmp(p,cuvant)==0)
+        precedent=precedent+4;
+    strcpy(cuvant,"cinci");
+    if (strcmp(p,cuvant)==0)
+        precedent=precedent+5;
+    strcpy(cuvant,"sase");
+    if (strcmp(p,cuvant)==0)
+        precedent=precedent+6;
+    strcpy(cuvant,"sapte");
+    if (strcmp(p,cuvant)==0)
+        precedent=precedent+7;
+    strcpy(cuvant,"opt");
+    if (strcmp(p,cuvant)==0)
+        precedent=precedent+8;
+    strcpy(cuvant,"noua");
+    if (strcmp(p,cuvant)==0)
+        precedent=precedent+9;
 
-    if (strcmp(cuvant, "zero") == 0)
-        valoare = 0;
-    else if (strcmp(cuvant, "unu") == 0)
-        valoare = 1;
-    else if (strcmp(cuvant, "doi") == 0 || strcmp(cuvant, "doua") == 0)
-        valoare = 2;
-    else if (strcmp(cuvant, "trei") == 0)
-        valoare = 3;
-    else if (strcmp(cuvant, "patru") == 0)
-        valoare = 4;
-    else if (strcmp(cuvant, "cinci") == 0)
-        valoare = 5;
-    else if (strcmp(cuvant, "sase") == 0)
-        valoare = 6;
-    else if (strcmp(cuvant, "sapte") == 0)
-        valoare = 7;
-    else if (strcmp(cuvant, "opt") == 0)
-        valoare = 8;
-    else if (strcmp(cuvant, "noua") == 0)
-        valoare = 9;
-    else if (strcmp(cuvant, "zece") == 0)
-        valoare = 10;
-    else if (strcmp(cuvant, "unsprezece") == 0)
-        valoare = 11;
-    else if (strcmp(cuvant, "doisprezece") == 0)
-        valoare = 12;
-    else if (strcmp(cuvant, "treisprezece") == 0)
-        valoare = 13;
-    else if (strcmp(cuvant, "paisprezece") == 0)
-        valoare = 14;
-    else if (strcmp(cuvant, "cincisprezece") == 0)
-        valoare = 15;
-    else if (strcmp(cuvant, "saisprezece") == 0)
-        valoare = 16;
-    else if (strcmp(cuvant, "saptesprezece") == 0)
-        valoare = 17;
-    else if (strcmp(cuvant, "optsprezece") == 0)
-        valoare = 18;
-    else if (strcmp(cuvant, "nouasprezece") == 0)
-        valoare = 19;
-    else if (strcmp(cuvant, "douazeci") == 0)
-        valoare = 20;
-    else if (strcmp(cuvant, "treizeci") == 0)
-        valoare = 30;
-    else if (strcmp(cuvant, "patruzeci") == 0)
-        valoare = 40;
-    else if (strcmp(cuvant, "cincizeci") == 0)
-        valoare = 50;
-    else if (strcmp(cuvant, "saizeci") == 0)
-        valoare = 60;
-    else if (strcmp(cuvant, "saptezeci") == 0)
-        valoare = 70;
-    else if (strcmp(cuvant, "optzeci") == 0)
-        valoare = 80;
-    else if (strcmp(cuvant, "nouazeci") == 0)
-        valoare = 90;
-    else if (strcmp(cuvant, "suta") == 0)
-        valoare = 100;
-    else if (strcmp(cuvant, "mie") == 0)
-        valoare = 1000;
-    else if (strcmp(cuvant, "milion") == 0)
-        valoare = 1000000;
-
-    operand += valoare * previous;
 }
 
-
-void sute(char *cuvant, int &operand, int &previous)
+void zecimale(char*p, int &operand, int &precedent)
 {
-    int valoare = 0;
-
-    if (strcmp(cuvant, "suta") == 0)
-        valoare = 100;
-    if (operand > 999)
-        operand = operand % 100 * 100 + operand / 1000 * 1000;
-    else operand *= 100;
-
-    operand += valoare * previous;
-}
-
-void mii(char *cuvant, int &operand, int &previous)
-{
-    int valoare = 0;
-
-    if (strcmp(cuvant, "mie") == 0)
-        valoare = 1000;
-    if (operand > 999999)
-        operand = operand % 1000 * 1000 + operand / 10000 * 10000;
-    else
-        operand *= 1000;
-
-    operand += valoare * previous;
-}
-
-void milioane(char *p, int &operand, int &previous)
-{
-    operand = 0;
-
-    char *cuvant = strtok(p, " ");
-
-    while (cuvant != NULL)
+    char cuvant[100];
+    short int gasit=0;
+    strcpy(cuvant, "zece");
+    if (strcmp(p,cuvant)==0)
     {
-        previous = 1;
-
-        if (strcmp(cuvant, "milioane") == 0)
-            operand *= 1000000;
-        else if (strcmp(cuvant, "mii") == 0)
-            mii(cuvant, operand, previous);
-        else if (strcmp(cuvant, "sute") == 0)
-            sute(cuvant, operand, previous);
-        else
-            zeciSiUnitati(cuvant, operand, previous);
-
-        cuvant = strtok(NULL, " ");
+        precedent=precedent+10;
+        gasit=1;
     }
+    strcpy(cuvant, "unsprezece");
+    if (strcmp(p,cuvant)==0)
+    {
+        precedent=precedent+11;
+        gasit=1;
+    }
+    strcpy(cuvant, "doisprezece");
+    if (strcmp(p,cuvant)==0)
+    {
+        precedent=precedent+12;
+        gasit=1;
+    }
+    strcpy(cuvant, "treisprezece");
+    if (strcmp(p,cuvant)==0)
+    {
+        precedent=precedent+13;
+        gasit=1;
+    }
+    strcpy(cuvant, "paisprezece");
+    if (strcmp(p,cuvant)==0)
+    {
+        precedent=precedent+14;
+        gasit=1;
+    }
+    strcpy(cuvant, "cincisprezece");
+    if (strcmp(p,cuvant)==0)
+    {
+        precedent=precedent+15;
+        gasit=1;
+    }
+    strcpy(cuvant, "saisprezece");
+    if (strcmp(p,cuvant)==0)
+    {
+        precedent=precedent+16;
+        gasit=1;
+    }
+    strcpy(cuvant, "saptesprezece");
+    if (strcmp(p,cuvant)==0)
+    {
+        precedent=precedent+17;
+        gasit=1;
+    }
+    strcpy(cuvant, "optsprezece");
+    if (strcmp(p,cuvant)==0)
+    {
+        precedent=precedent+18;
+        gasit=1;
+    }
+    strcpy(cuvant, "nouasprezece");
+    if (strcmp(p,cuvant)==0)
+    {
+        precedent=precedent+19;
+        gasit=1;
+    }
+    strcpy(cuvant, "douazeci");
+    if (strcmp(p,cuvant)==0)
+    {
+        precedent=precedent+20;
+        gasit=1;
+    }
+    strcpy(cuvant, "treizeci");
+    if (strcmp(p,cuvant)==0)
+    {
+        precedent=precedent+30;
+        gasit=1;
+    }
+    strcpy(cuvant, "patruzeci");
+    if (strcmp(p,cuvant)==0)
+    {
+        precedent=precedent+40;
+        gasit=1;
+    }
+    strcpy(cuvant, "cincizeci");
+    if (strcmp(p,cuvant)==0)
+    {
+        precedent=precedent+50;
+        gasit=1;
+    }
+    strcpy(cuvant, "saizeci");
+    if (strcmp(p,cuvant)==0)
+    {
+        precedent=precedent+60;
+        gasit=1;
+    }
+    strcpy(cuvant, "saptezeci");
+    if (strcmp(p,cuvant)==0)
+    {
+        precedent=precedent+70;
+        gasit=1;
+    }
+    strcpy(cuvant, "optzeci");
+    if (strcmp(p,cuvant)==0)
+    {
+        precedent=precedent+80;
+        gasit=1;
+    }
+    strcpy(cuvant, "nouazeci");
+    if (strcmp(p,"nouazeci")==0)
+    {
+        precedent=precedent+90;
+        gasit=1;
+    }
+    if (gasit==0)
+        cifre(p,operand,precedent);
 }
+
+void sute(char *p, int &operand, int &precedent, int &intermediar)
+{
+    char cuvant[100];
+    int gasit=0;
+    strcpy(cuvant, "suta");
+    if (strcmp(p,cuvant)==0)
+    {
+        intermediar=100;
+        gasit=1;
+        precedent=0;
+    }
+    strcpy(cuvant, "sute");
+    if (strcmp(p,cuvant)==0)
+    {
+        intermediar=precedent*100;
+        gasit=1;
+        precedent=0;
+    }
+
+    if (gasit==0)
+        zecimale(p,operand,precedent);
+}
+
+void mii(char *p, int &operand, int &precedent, int &intermediar)
+{
+    char cuvant[100];
+    int gasit=0;
+    strcpy(cuvant, "mie");
+    if (strcmp(p,cuvant)==0)
+    {
+        operand=operand+1000;
+        gasit=1;
+    }
+    strcpy(cuvant, "mii");
+    if (strcmp(p,cuvant)==0 && intermediar!=0 || strcmp(p,cuvant)==0 && precedent!=0)
+    {
+        if (precedent!=0)
+        {
+            intermediar=intermediar+precedent;
+            precedent=0;
+        }
+        operand=operand+intermediar*1000;
+        intermediar=0;
+        gasit=1;
+    }
+    if (gasit==0)
+        sute(p,operand,precedent,intermediar);
+}
+
+void milioane(char *p, int &operand, int &precedent, int &intermediar)
+{
+    char cuvant[100];
+    int gasit=0;
+    strcpy(cuvant, "milion");
+    if (strcmp(p,cuvant)==0)
+    {
+        operand=operand+1000000;
+        gasit=1;
+    }
+    strcpy(cuvant, "milioane");
+    if (strcmp(p,cuvant)==0 && intermediar!=0 || strcmp(p,cuvant)==0 && precedent!=0)
+    {
+        if (precedent!=0)
+        {
+            intermediar=intermediar+precedent;
+            precedent=0;
+        }
+        operand=operand+intermediar*1000000;
+        gasit=1;
+        intermediar=0;
+    }
+    if (gasit==0)
+        mii(p,operand,precedent,intermediar);
+}
+
 
 
     ////////////////////////////////////////////////
