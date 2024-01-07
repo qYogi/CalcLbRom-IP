@@ -671,7 +671,7 @@ void zeciSiUnitati(char *cuvant, int &operand, int &previous)
         valoare = 80;
     else if (strcmp(cuvant, "nouazeci") == 0)
         valoare = 90;
-    else if (strcmp(cuvant, "suta") == 0)
+    else if (strcmp(cuvant, "suta") == 0 || strcmp(cuvant,"sute")==0)
         valoare = 100;
     else if (strcmp(cuvant, "mie") == 0)
         valoare = 1000;
@@ -714,11 +714,11 @@ void milioane(char *p, int &operand, int &previous)
     ///operand = 0;
     char cuvant[300];
     previous = 1;
-    if (strcmp(p, "milioane") == 0)
+    if (strcmp(p, "milioane") == 0 || strcmp(p,"milion")==0)
             operand *= 1000000;
-        else if (strcmp(p, "mii") == 0)
+        else if (strcmp(p, "mii") == 0 || strcmp(p,"mie")==0)
             mii(p, operand, previous);
-        else if (strcmp(p, "sute") == 0)
+        else if (strcmp(p, "sute") == 0 || strcmp(p,"suta")==0)
             sute(p, operand, previous);
         else
             zeciSiUnitati(p, operand, previous);
@@ -803,7 +803,7 @@ void PrelucrareaPropozitiei (int variabila)
     p = strtok(sirprelucrat,separator);
     while (p)
     {
-        if (strstr(p,"unu") || strstr(p,"doi") || strstr(p,"trei") || strstr(p,"patru") || strstr(p,"cinci") || strstr(p,"sase") || strstr(p,"sapte") || strstr(p,"opt") || strstr(p,"noua") ||strstr(p,"zero") || strstr(p,"doua") || strstr(p,"zece") || strstr(p,"douazeci") || strstr(p,"treizeci") || strstr(p,"patruzeci") || strstr(p,"cincizeci") || strstr(p,"saizeci") || strstr(p,"saptezeci")||strstr(p,"optzeci")||strstr(p,"nouazeci")||strstr(p,"sute")||strstr(p,"mie")||strstr(p,"mii")||strstr(p,"milion")||strstr(p,"milioane")|| strstr(p,"unsprezece") || strstr(p,"doisprezece") || strstr(p,"treisprezece") || strstr(p,"paisprezece") || strstr(p,"cincisprezece") || strstr(p,"saisprezece") || strstr(p,"saptesprezece") || strstr(p,"optsprezece") || strstr(p,"nouasprezece"))
+        if (strstr(p,"unu") || strstr(p,"doi") || strstr(p,"trei") || strstr(p,"patru") || strstr(p,"cinci") || strstr(p,"sase") || strstr(p,"sapte") || strstr(p,"opt") || strstr(p,"noua") ||strstr(p,"zero") || strstr(p,"doua") || strstr(p,"zece") || strstr(p,"douazeci") || strstr(p,"treizeci") || strstr(p,"patruzeci") || strstr(p,"cincizeci") || strstr(p,"saizeci") || strstr(p,"saptezeci")||strstr(p,"optzeci")||strstr(p,"nouazeci")||strstr(p,"sute")||strstr(p,"mie")||strstr(p,"mii")||strstr(p,"milion")||strstr(p,"milioane")|| strstr(p,"unsprezece") || strstr(p,"doisprezece") || strstr(p,"treisprezece") || strstr(p,"paisprezece") || strstr(p,"cincisprezece") || strstr(p,"saisprezece") || strstr(p,"saptesprezece") || strstr(p,"optsprezece") || strstr(p,"nouasprezece") || strcmp(p,"suta")==0 || strcmp(p,"mie")==0 || strcmp(p,"milion")==0)
         {
             if (strstr (p,"zero"))
                 isZero=true;
@@ -820,11 +820,6 @@ void PrelucrareaPropozitiei (int variabila)
             if (strstr(p, "-"))
             {
                 input[i]='-';
-                i++;
-            }
-            if (strstr(p, "*"))
-            {
-                input[i]='*';
                 i++;
             }
             if (strstr(p, "/"))
@@ -933,7 +928,7 @@ void PrelucrareaPropozitiei (int variabila)
                     isParanthesisPtSemne=false;
                 }
             }
-            if (strstr(p, "ori"))
+            if (strstr(p, "ori") || strcmp(p,"*")==0)
             {
                 if (isNumber)
                 {
@@ -1520,3 +1515,4 @@ int main()
  
     return 0;
 }
+ 
