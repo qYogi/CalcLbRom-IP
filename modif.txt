@@ -1577,91 +1577,120 @@ void displayInputWindow()
     setbkcolor(BLACK);
     cleardevice(); // Curata fereastra
 
-    int i = 0;
+    // Fereastra neagra pentru introducerea propozitiei
+
     //cleardevice();
 
     //bool backspaceApasat = false;
 
-    //char propozitie[500]={0};
-
     while (1)
     {
-        //memset(rezultatFinal, 0, sizeof(rezultatFinal));
-        //memset(propozitie, 0, sizeof(propozitie));
-        //memset(input, 0, sizeof(input));
-        //memset(separator, 0, sizeof(separator));
-        //memset(sirprelucrat, 0, sizeof(sirprelucrat));
-        //strcpy(rezultatFinal, " ");
-        //strcpy(propozitie, " ");
-        //strcpy(input, " ");
-        //operand = 0, previous = 0;
-        //memset(numar, 0, sizeof(numar));
-        //Cat face doi plus doi ?
-        //numar.clear();
-        initVariables();
-
         setbkcolor(BLACK);
         setcolor(WHITE);
 
         settextstyle(3, HORIZ_DIR, 2);
-        outtextxy(411, 50, "Introduceti o propozitie in consola.");
+        outtextxy(411, 50, "Introduceti o propozitie.");
 
-        printf("Introduceti o propozitie: ");
-        fgets(propozitie, sizeof(propozitie), stdin);
+        int lungime = 0;
 
-        // Eliminăm \n de la sfârșitul șirului dacă există
-        size_t lungime = strlen(propozitie);
-        //if (lungime > 0 && propozitie[lungime - 1] == '\n')
-            //propozitie[lungime - 1] = '\0';
-
-        for(i = 0; i < strlen(propozitie); i++)
-            propozitie[i] = tolower(propozitie[i]);
-
-        i = 0;
-
-        PrelucrareaPropozitiei (1);
-
-        CalculareaRezultatului (1);
-
-        TransformareNumarInCuvinte (1);
+        char introd[200] = {0};
 
         setbkcolor(BLACK);
         setcolor(WHITE);
 
-        outtextxy(411, 100, "Rezultatul ecuatiei: ");
-        settextstyle(3, HORIZ_DIR, 2);
+        char c = getch();
+        int the_end = 0;
 
-        outtextxy(411, 130, rezultatFinal);
-        settextstyle(3, HORIZ_DIR, 2);
-
-        outtextxy(411, 270, "Pentru a mai introduce o ecuatie, te rog sa apesi ENTER.");
-        settextstyle(3, HORIZ_DIR, 2);
-
-        // Așteaptă apăsarea tastei Enter pentru a șterge ecranul și reveni la introducerea propoziției
-        while (1)
+        do
         {
-            if (kbhit())
+            settextstyle(3, HORIZ_DIR, 2);
+            outtextxy(411, 50, "Introduceti o propozitie.");
+
+            outtextxy(411, 160, introd);
+
+            c = getch();
+
+            switch (c)
             {
-                char ch = getch();
-                if (ch == '\r')
+            case 8: /* backspace */
+                if (lungime)
                 {
-                    cleardevice();
-                    break;
+                    lungime--;
+                    introd[lungime] = 0;
                 }
-                else if (ch == '\b')
+                break;
+            case 13: /* return */
+                the_end = 1;
+
+                strcpy(propozitie, introd);
+                for(i = 0; i < strlen(propozitie); i++)
+                    propozitie[i] = tolower(propozitie[i]);
+
+                i = 0;
+
+                PrelucrareaPropozitiei (1);
+
+                CalculareaRezultatului (1);
+
+                TransformareNumarInCuvinte (1);
+
+                //strcpy(rezultatFinal, propozitie);
+                setbkcolor(BLACK);
+                setcolor(WHITE);
+
+                outtextxy(411, 330, "Rezultatul ecuatiei: ");
+                settextstyle(3, HORIZ_DIR, 2);
+
+                outtextxy(411, 420, rezultatFinal);
+                settextstyle(3, HORIZ_DIR, 2);
+
+                outtextxy(411, 500, "Pentru a reveni la ecranul de start, te rog sa apesi ESCAPE.");
+                settextstyle(3, HORIZ_DIR, 2);
+
+                initVariables();
+                while(1)
                 {
-                    closegraph();
-                    displayMainWindow();
-                    break;
+                    if(kbhit())
+                    {
+                        char ch = getch();
+                        if (ch == 27)
+                        {
+                            cleardevice();
+                            displayMainWindow();
+
+                            break;
+                        }
+                    }
+                }
+
+                lungime = 0;
+                //memset(introd, 0, sizeof(introd));
+                break;
+            case 27: /* Escape = Abort */
+                introd[0] = 0;
+                the_end = 1;
+                displayMainWindow();
+                break;
+            default:
+                if (lungime < 199 && c >= ' ' && c <= '~')
+                {
+                    introd[lungime] = c;
+                    lungime++;
+                    introd[lungime] = 0;
                 }
             }
+
+            outtextxy(411, 160, introd);
+            settextstyle(3, HORIZ_DIR, 2);
+
+            setbkcolor(BLACK);
+            cleardevice();
+
         }
-
-        setbkcolor(BLACK);
-        cleardevice(); // Șterge ecranul pentru a permite introducerea unei noi propoziții
-
+        while (!the_end);
     }
 }
+
 
 int main()
 {
